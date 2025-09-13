@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Statistics Calculator</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <h1>Statistics Calculator for Distributions</h1>
+
+  <!-- Menu -->
+  <div id="menu" class="menu">
+    <h2>Select a Distribution</h2>
+    <button onclick="showCalc('binomial')">Binomial Distribution (DRV)</button>
+    <button onclick="showCalc('normal')">Normal Distribution (CRV)</button>
+    <button onclick="showCalc('geometric')">Geometric Distribution (DRV)</button>
+    <button onclick="showCalc('discreteUniform')">Discrete Uniform (DRV)</button>
+    <button onclick="showCalc('continuousUniform')">Continuous Uniform (CRV)</button>
+    <button onclick="showCalc('adhoc')">Ad-hoc Function (CRV)</button>
+    <button onclick="showCalc('poisson')">Poisson Distribution (DRV)</button>
+  </div>
+
+
+
+  <!-- Binomial -->
+  <div id="binomial" class="calculator">
+    <h2>Binomial Distribution (DRV)</h2>
+    <label>x: <input type="number" id="binom-x"></label>
+    <label>n: <input type="number" id="binom-n"></label>
+    <label>p: <input type="number" id="binom-p" step="0.01"></label>
+    <button onclick="calcBinomial()">PMF (P(X=x))</button>
+    <button onclick="calcBinomialCDF()">CDF (P(X≤x))</button>
+    <button class="backBtn" onclick="goBack()">Back</button>
+    <p id="binom-result" class="result-box"></p>
+    <div class="formula-img">
+      <img src="assets/bin.jpg" alt="Binomial Formula">
+    </div>
+  </div>
+
+
+  <!-- Normal -->
+  <div id="normal" class="calculator">
+    <h2>Normal Distribution (CRV)</h2>
+    <label>x: <input type="number" id="norm-x" step="0.1"></label>
+    <label>σ: <input type="number" id="norm-sigma" step="0.1"></label>
+    <label>μ: <input type="number" id="norm-mu" step="0.1"></label>
+    <button onclick="calcNormalPDF()">PDF at x</button>
+    <button onclick="calcNormalCDF()">CDF (P(X≤x))</button>
+    <h3>Area Between</h3>
+    <label>x1: <input type="number" id="norm-x1" step="0.1"></label>
+    <label>x2: <input type="number" id="norm-x2" step="0.1"></label>
+    <label>σ: <input type="number" id="norm-sigma2" step="0.1"></label>
+    <label>μ: <input type="number" id="norm-mu2" step="0.1"></label>
+    <button onclick="calcNormalArea()">Area between x1 and x2</button>
+    <button class="backBtn" onclick="goBack()">Back</button>
+    <p id="norm-result" class="result-box"></p>
+    <div class="formula-img">
+      <img src="assets/norm.jpg" alt="Normal Formula">
+    </div>
+  </div>
+
+  <!-- Geometric -->
+  <div id="geometric" class="calculator">
+    <h2>Geometric Distribution (DRV)</h2>
+    <label>p: <input type="number" id="geom-p" step="0.01"></label>
+    <label>k (trial number): <input type="number" id="geom-k"></label>
+    <button onclick="calcGeometric()">PMF</button>
+    <button onclick="calcGeometricCDF()">CDF</button>
+    <button class="backBtn" onclick="goBack()">Back</button>
+    <p id="geom-result" class="result-box"></p>
+    <div class="formula-img">
+      <img src="assets/geo.jpg" alt="Geometric Formula">
+    </div>
+  </div>
+
+  <!-- Discrete Uniform -->
+  <div id="discreteUniform" class="calculator">
+    <h2>Discrete Uniform (DRV)</h2>
+    <label>a (min integer): <input type="number" id="du-a"></label>
+    <label>b (max integer): <input type="number" id="du-b"></label>
+    <label>x: <input type="number" id="du-x"></label>
+    <button onclick="calcDiscreteUniform()">PMF</button>
+    <button onclick="calcDiscreteUniformCDF()">CDF</button>
+    <button class="backBtn" onclick="goBack()">Back</button>
+    <p id="du-result" class="result-box"></p>
+    <div class="formula-img">
+      <img src="assets/unidrv.jpg" alt="Discrete Uniform Formula">
+    </div>
+  </div>
+
+  <!-- Continuous Uniform -->
+  <div id="continuousUniform" class="calculator">
+    <h2>Continuous Uniform (CRV)</h2>
+    <label>a: <input type="number" id="cu-a"></label>
+    <label>b: <input type="number" id="cu-b"></label>
+    <label>x: <input type="number" id="cu-x"></label>
+    <button onclick="calcContinuousUniform()">PDF</button>
+    <button onclick="calcContinuousUniformCDF()">CDF</button>
+    <button class="backBtn" onclick="goBack()">Back</button>
+    <p id="cu-result" class="result-box"></p>
+    <div class="formula-img">
+      <img src="assets/unicrv.jpg" alt="Continuous Uniform Formula">
+    </div>
+  </div>
+
+  <!-- Ad-hoc -->
+  <div id="adhoc" class="calculator">
+    <h2>Ad-hoc Function (CRV)</h2>
+    <p>Enter function f(x) and interval [a, b]. Example: <code>x*x</code></p>
+    <label>f(x): <input type="text" id="adhoc-fn" value="x*x"></label>
+    <label>a: <input type="number" id="adhoc-a"></label>
+    <label>b: <input type="number" id="adhoc-b"></label>
+    <button onclick="calcAdhoc()">Calculate ∫ f(x) dx</button>
+    <button class="backBtn" onclick="goBack()">Back</button>
+    <p id="adhoc-result" class="result-box"></p>
+    <div class="formula-img">
+      <img src="assets/adhoc.jpg" alt="Ad-hoc Function Formula">
+    </div>
+  </div>
+
+  <!-- Poisson -->
+  <div id="poisson" class="calculator">
+    <h2>Poisson Distribution (DRV)</h2>
+    <label>x: <input type="number" id="pois-x"></label>
+    <label>λ: <input type="number" id="pois-lambda" step="0.1"></label>
+    <button onclick="calcPoisson()">PMF</button>
+    <button onclick="calcPoissonCDF()">CDF</button>
+    <button class="backBtn" onclick="goBack()">Back</button>
+    <p id="pois-result" class="result-box"></p>
+    <div class="formula-img">
+      <img src="assets/poisson.jpg" alt="Poisson Formula">
+    </div>
+  </div>
+
+  <!-- JS stuff coz math n buttons -->
+  <script src="script.js"></script>
+  
+  
+</body>
+</html>
